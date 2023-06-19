@@ -70,20 +70,6 @@ if (isset($_POST["submit"])){
          } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
          }
-
-
-           // $emailTo = 'support@dblinc.freshdesk.com';
-           // $subject = $name. ' requests information about '.$inquiryPro.'.';
-           // //$sender = $email;
-           // $body = $name . ' at '.$email. " says: \n\n" .$msg;
-           //
-           // if (mail($emailTo, $subject, $body)){
-           //     $_SESSION['successMessage'] = 'Mail sent';
-           //     redirect_to('inquiry.php');
-           // } else {
-           //     $_SESSION['errorMessage'] = 'Email failed to send';
-           //     redirect_to('inquiry.php');
-           // }
        }
    }
 }
