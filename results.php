@@ -98,7 +98,9 @@ when ready_to_extract <>'' then 'Approved / Pending AP'
 when ready_to_extract = '' and extract_date = '' then 'Pending Audit'
 end as exportStatus,
 
+invoices.owner,
 invoices.oid,
+invoices.scac,
 trim(trailing ' (Load ID)' from invoices.primary_ref) as primary_ref,
 invoices.invoice_number,
 invoices.inv_charge,
@@ -109,50 +111,6 @@ trim(leading'0'from replace(replace(lower(concat(invoices.primary_ref,' ',pro,' 
 concat(invoices.primary_ref,', ',pro,', ',pro_number,', ',po_number,', ',order_number,', ',invoice_number,' ') as search_keys
 
 from invoices
-
--- old sql statement. okay to delete when this all shakes out
-
-	-- case
-	-- 	when queue = 'Reject' then '<span style=\"color:red\">Rejected'
-  --   when extract_date <> '' or queue = 'Approve' then 'Processed'
-  --   when ready_to_extract <>'' then 'Approved / Pending AP'
-  --   when ready_to_extract = '' and extract_date = '' then 'Pending Audit'
-  --   end as inv_status,
-
-  --   case
-  -- 		when queue = 'Reject' then 'Rejected'
-  --     when extract_date <> '' or queue = 'Approve' then 'Processed'
-  --     when ready_to_extract <>'' then 'Approved / Pending AP'
-  --     when ready_to_extract = '' and extract_date = '' then 'Pending Audit'
-  --     end as exportStatus,
-
-  --   invoices.oid,
-  --   trim(trailing ' (Load ID)' from invoices.primary_ref) as primary_ref,
-  --   invoices.scac,
-  --   invoices.`owner`,
-  --   invoices.invoice_number,
-  --   invoices.delv_date,
-  --   totals_by_primary_ref.total,
-  --   invoices.inv_charge,
-  --   invoices.extract_date,
-  --   format(invoices.inv_charge,2) as finv_charge,
-
-  --   if (totals_by_primary_ref.hasrejects = -1,concat('<span style=\"color:red\">$',format(processed,2),'</span> Processed'),concat('<span style=\"color:black\">$',format(processed,2),'</span> Processed')) as charge_status,
-  --   if (invoices.delv_date <> '', '<span style=\"color:green\"> - Delivered </span>','<span style=\"color:red\"> - Not Delivered </span>')as delv_status,
-  --   if (extract_date = '',(concat('Submitted ',substr(create_date,1,10))),(concat('Extracted ',substr(extract_date,1,10)))) as last_action_date,
-  --   if (totals_by_primary_ref.total is null, '0.00', totals_by_primary_ref.total) as total_charge,
-
-  --   totals_by_primary_ref.invoices,
-  --   totals_by_primary_ref.processed,
-  --   charge_with_oid.charge_desc,
-  --   charge_with_oid.charge_total,
-  --   trim(leading'0'from replace(replace(lower(concat(invoices.primary_ref,' ',pro,' ',pro_number,' ',po_number,' ',order_number,' ',invoice_number,' ')),'-',''),'.','')) as possibles,
-  --   concat(invoices.primary_ref,', ',pro,', ',pro_number,', ',po_number,', ',order_number,', ',invoice_number,' ') as search_keys
-
-  --   from invoices
-
-  --   left join charge_with_oid on invoices.oid = charge_with_oid.oid
-  --   left join totals_by_primary_ref on invoices.primary_ref = totals_by_primary_ref.primary_ref
 
 where ([WHERESTMT])";
 // if the scac is the wildcard scac, skip the  scac filter

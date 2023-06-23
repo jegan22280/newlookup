@@ -22,8 +22,35 @@ var table = new Tabulator("#ttable",{
       },
     target:"_blank"
     }},
-    {title:"Pro",field:"invoice_number",headerFilter:true, headerFilterPlaceholder:"Filter by PRO..."},
-    {title:"Total",field:"finv_charge",headerFilter:true, headerFilterPlaceholder:"Filter by Total..."},
+    {title:"Owner",field:"owner",headerFilter:true, headerFilterPlaceholder:"Filter by Owner..."},
+    {title:"SCAC",field:"scac",headerFilter:true, headerFilterPlaceholder:"Filter by SCAC..."},
+    {title:"Pro",field:"invoice_number",headerFilter:true, headerFilterPlaceholder:"Filter by PRO...",formatter:"link",formatterParams:{
+      urlPrefix:"https://",     
+      url:function (cell) {
+        // using a temp variable to grap all the datapoints in the row as an object
+        let rowDetails = cell.getRow(cell);
+        // using the object from the above to return the scac and pro column values
+        const scac = rowDetails.getData().scac;
+        const pro = rowDetails.getData().invoice_number;
+        // now that I have the oid I can build my url
+        if (rowDetails.getData().inv_status == "Rejected") {
+          return `payments.dblinc.net/php/newlookup/getErrorID.php?scac=${scac}&pro=${pro}` 
+        } else {
+          return`payments.dblinc.net/php/newlookup/noerror.php`
+        }},
+      target:"_blank"
+      }},
+    {title:"Total",field:"finv_charge",headerFilter:true, headerFilterPlaceholder:"Filter by Total...",formatter:"link",formatterParams:{
+      urlPrefix:"https://",     
+      url:function (cell) {
+        // using a temp variable to grap all the datapoints in the row as an object
+        let rowDetails = cell.getRow(cell);
+        // using the object from the above to return the oid column value
+        const oid = rowDetails.getData().oid;
+        // now that I have the oid I can build my url
+        return `abornandco.mercurygate.net/MercuryGate/settlement/viewInvoice.jsp?oidInvoice=${oid}&activeTab=details`},
+        target:"_blank"
+      }},
     {title:"Status",field: "inv_status",headerFilter:true, headerFilterPlaceholder:"Filter by Status...",formatter:function(cell){
       var value = cell.getValue();
        if(value == "Rejected"){
