@@ -10,10 +10,6 @@ require_once 'includes/functions.php';
 <?php 
 $errorSCAC =  $_GET["scac"];
 $errorPro =  $_GET["pro"];
-echo $errorSCAC;
-echo "<br>";
-echo $errorPro;
-echo "<br>";
 $eConn = e_conn();
 
 $errorIDSelectStmt = $eConn->prepare("SELECT id from errors where E_SCAC = ? and E_PRO = ?");
@@ -22,9 +18,6 @@ $errorIDSelectStmt->execute();
 $result = $errorIDSelectStmt->get_result();
 $resultArray = $result -> fetch_array(MYSQLI_ASSOC);
 $errorID = $resultArray['id'];
-var_dump($errorID);
-echo "<BR><BR>";
-var_dump($resultArray);
 
 if ($errorID == "") {
     # display error
