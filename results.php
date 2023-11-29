@@ -105,8 +105,8 @@ trim(trailing ' (Load ID)' from invoices.primary_ref) as primary_ref,
 invoices.invoice_number,
 invoices.inv_charge,
 format(invoices.inv_charge,2) as finv_charge,
-
-
+trim(substring_index(invoices.ship_date,' ', 1)) as ship_date,
+trim(substring_index(invoices.extract_date,' ', 1)) as extract_date,
 trim(leading'0'from replace(replace(lower(concat(invoices.primary_ref,' ',pro,' ',pro_number,' ',po_number,' ',order_number,' ',invoice_number,' ')),'-',''),'.','')) as possibles,
 concat(invoices.primary_ref,', ',pro,', ',pro_number,', ',po_number,', ',order_number,', ',invoice_number,' ') as search_keys
 

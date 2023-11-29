@@ -34,9 +34,9 @@ var table = new Tabulator("#ttable",{
         const pro = rowDetails.getData().invoice_number;
         // now that I have the oid I can build my url
         if (rowDetails.getData().inv_status == "Rejected") {
-          return `payments.dblinc.net/php/newlookup/getErrorID.php?scac=${scac}&pro=${pro}` 
+          return `payments.dblinc.net/php/lookup/getErrorID.php?scac=${scac}&pro=${pro}` 
         } else {
-          return`payments.dblinc.net/php/newlookup/noerror.php`
+          return`payments.dblinc.net/php/lookup/noerror.php`
         }},
       target:"_blank"
       }},
@@ -59,6 +59,8 @@ var table = new Tabulator("#ttable",{
            return value;
        }
     }},
+    {title:"Shipped", field:"ship_date",visible:false, download:true},
+    {title:"Extracted", field:"extract_date",visible:false, download:true},
   ],
   initialSort:[
     {column:"primary_ref",dir:"desc"},
