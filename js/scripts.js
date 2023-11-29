@@ -2,7 +2,7 @@
 //   var load = cell.getValue();
 //   return`<a href='https://payments.dblinc.net/php/payments/results.php?loads=${load}&SubmitButton=>${load}</a>`
 // }
-// git test
+
 
 var table = new Tabulator("#ttable",{
   clipboard:true,
